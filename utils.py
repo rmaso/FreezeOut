@@ -92,7 +92,7 @@ def get_data_loader(which_dataset,augment=True,validate=True,batch_size=50):
         transforms.ToTensor(),
         norm_transform
     ])
-    kwargs = {'num_workers': 1, 'pin_memory': True}
+    kwargs = {'num_workers': 1, 'pin_memory': False}
 
     train_set = dataset(
         root='cifar',
@@ -174,7 +174,6 @@ def progress(items, desc='', total=None, min_delay=0.1):
     total = total or len(items)
     t_start = time.time()
     t_last = 0
-    logging.info(items)
     for n, item in enumerate(items):
         t_now = time.time()
         if t_now - t_last > min_delay:
