@@ -1,47 +1,74 @@
-# FreezeOut
-A simple technique to accelerate neural net training by progressively freezing layers.
-
-![LRCURVE](http://i.imgur.com/yKE9pzG.gif)
-
-This repository contains code for the extended abstract "[FreezeOut.](https://arxiv.org/abs/1706.04983)" 
-
-FreezeOut directly accelerates training by annealing layer-wise learning rates to zero on a set schedule, and excluding layers from the backward pass once their learning rate bottoms out.
-
-I had this idea while replying [to a reddit comment](https://www.reddit.com/r/MachineLearning/comments/6goyh5/r_forward_thinking_building_and_training_neural/dis12qh/) at 4AM. I threw it in an experiment, and it just worked out of the box (with linear scaling and t_0=0.5), so I went on a 96-hour SCIENCE binge, and now, here we are.
-
-![DESIGNCURVE](http://i.imgur.com/lsa1pRq.png)
-
-The exact speedup you get depends on how much error you can tolerate--higher speedups appear to come at the cost of an increase in error, but speedups below 20% should be within a 3% relative error envelope, and speedups around 10% seem to incur no error cost for Scaled Cubic and Unscaled Linear strategies.
+# Hackathon Castelló
+Aquest repositori es per a la participació en el [Hackathon de Castelló 2017](http://www.hackathoncastellon.com), en el repte d'Inteligencia Artificial - Machine Learning.
 
 ## Installation
-To run this script, you will need [PyTorch](http://pytorch.org) and a CUDA-capable GPU. If you wish to run it on CPU, just remove all the .cuda() calls.
+
+### Installing virtualenv
+
+Take the following steps to install Pytorch and TensorFlow with Virtualenv:
+
+1. Start a terminal (a shell). You'll perform all subsequent steps in this shell.
+
+2. Install pip and virtualenv by issuing the following commands:
+
+```
+ $ sudo easy_install pip
+ $ sudo pip install --upgrade virtualenv 
+```
+
+Create a virtualenv environment by issuing a command of one of the following formats:
+
+```
+ $ virtualenv --system-site-packages targetDirectory # for Python 2.7
+```
+
+where targetDirectory identifies the top of the virtualenv tree. Our instructions assume that targetDirectory is ~/Documents/Development/hackathon-castellon/venv, but you may choose any directory.
+
+Activate the virtualenv environment by issuing one of the following commands:
+
+```
+$ source ~/Documents/Development/hackathon-castellon/venv/bin/activate      # If using bash, sh, ksh, or zsh
+```
+
+The preceding source command should change your prompt to the following:
+
+ (venv)$ 
+
+Ensure pip ≥8.1 is installed:
+
+```
+ (venv)$ easy_install -U pip
+```
+
+### Installing TensorFlow
+
+Issue one of the following commands to install TensorFlow and all the packages that TensorFlow requires into the active Virtualenv environment:
+
+```
+ (venv)$ pip install --upgrade tensorflow      # for Python 2.7
+```
+
+### Installing Pytorch
+
+```
+ (venv)$ pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl 
+ (venv)$ pip install torchvision 
+```
 
 ## Running
+
 To run with default parameters, simply call
 
-```sh
+```python
 python train.py
 ```
 
 This will by default download CIFAR-100, split it into train, valid, and test sets, then train a k=12 L=76 DenseNet-BC using SGD with Nesterov Momentum.
 
-This script supports command line arguments for a variety of parameters, with the FreezeOut specific parameters being:
-- how_scale selects which annealing strategy to use, among linear, squared, and cubic. Cubic by default.
-- scale_lr determines whether to scale initial learning rates based on t_i. True by default.
-- t_0 is a float between 0 and 1 that decides how far into training to freeze the first layer. 0.8 (pre-cubed) by default.
-- const_time is an experimental setting that increases the number of epochs based on the estimated speedup, in order to match the total training time against a non-FreezeOut baseline. I have not validated if this is worthwhile or not.
-
-You can also set the name of the weights and the metrics log, which model to use, how many epochs to train for, etc.
-
-If you want to calculate an estimated speedup for a given strategy and t_0 value, use the calc_speedup() function in utils.py.
-
 ## Notes
-If you know how to implement this in a static-graph framework (specifically TensorFlow or Caffe2), shoot me an email! It's really easy to do with dynamic graphs, but I believe it to be possible with some simple conditionals in a static graph. 
+https://github.com/zalandoresearch/fashion-mnist      
+https://github.com/kuangliu/pytorch-cifar
+https://github.com/pytorch/vision/blob/master/torchvision/datasets/mnist.py
 
-There's (at least) one typo in the paper where it defines the learning rate schedule, there should be a 1/2 in front of alpha.
+https://github.com/hwalsuklee/tensorflow-generative-model-collections
 
-## Acknowledgments
-- DenseNet code stolen in a daring midnight heist from Brandon Amos: https://github.com/bamos/densenet.pytorch
-- Training and Progress code acquired in a drunken game of SpearPong with Jan Schlüter: https://github.com/Lasagne/Recipes/tree/master/papers/densenet
-- Metrics Logging code extracted from ancient diary of Daniel Maturana: https://github.com/dimatura/voxnet
-- WideResNet code summoned using an incantation from Xternalz: https://github.com/xternalz/WideResNet-pytorch

@@ -121,7 +121,7 @@ def train_test(depth, growth_rate, dropout, augment,
                         + 'C' + str(which_dataset))
     # Seed RNG
     torch.manual_seed(seed)
-    torch.cuda.manual_seed(seed)
+    #torch.cuda.manual_seed(seed)
     np.random.seed(seed)
     
     # Name of the file to which we're saving losses and errors.
@@ -160,7 +160,7 @@ def train_test(depth, growth_rate, dropout, augment,
                                     scale_lr = scale_lr,
                                     how_scale = how_scale,
                                     const_time = const_time)
-        net = net.cuda()
+        # net = net.cuda()
         start_epoch = 0
     
 
@@ -174,8 +174,10 @@ def train_test(depth, growth_rate, dropout, augment,
     # y: target labels
     def train_fn(x, y):
         net.optim.zero_grad()
-        output = net(V(x.cuda()))
-        loss = F.nll_loss(output, V(y.cuda()))
+        # output = net(V(x.cuda()))
+        output = net(V(x))
+        # loss = F.nll_loss(output, V(y.cuda()))
+        loss = F.nll_loss(output, V(y))
         loss.backward()
         net.optim.step()
         return loss.data[0]
@@ -184,8 +186,10 @@ def train_test(depth, growth_rate, dropout, augment,
     # x: input data
     # y: target labels
     def test_fn(x, y):
-        output = net(V(x.cuda(), volatile=True))
-        test_loss = F.nll_loss(output, V(y.cuda(), volatile=True)).data[0]
+        # output = net(V(x.cuda(), volatile=True))
+        output = net(V(x, volatile=True))
+        # test_loss = F.nll_loss(output, V(y.cuda(), volatile=True)).data[0]
+        test_loss = F.nll_loss(output, V(y, volatile=True)).data[0]
 
         # Get the index of the max log-probability as the prediction.
         pred = output.data.max(1)[1].cpu()
@@ -221,11 +225,12 @@ def train_test(depth, growth_rate, dropout, augment,
             total=len(train_loader.dataset) // batch_size)
 
         # Put the network into training mode
+        logging.info('Training...')
         net.train()
     
         # Execute training pass
         for x, y in batches:
-        
+
             # Update LR if using cosine annealing
             if 'itr' in net.lr_sched:
                 net.update_lr()

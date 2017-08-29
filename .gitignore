@@ -47,5 +47,9 @@ Temporary Items
 .apdisk
 
 # Python files
-.pyc
+*.pyc
 WRN logs
+
+# Virtual environment
+venv/
+cifar/
