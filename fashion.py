@@ -8,7 +8,7 @@ import torch
 import codecs
 
 
-class MNIST(data.Dataset):
+class FASHION(data.Dataset):
     """`MNIST <http://yann.lecun.com/exdb/mnist/>`_ Dataset.
     Args:
         root (string): Root directory of dataset where ``processed/training.pt``
@@ -113,7 +113,7 @@ class MNIST(data.Dataset):
             file_path = os.path.join(self.root, self.raw_folder, filename)
             with open(file_path, 'wb') as f:
                 f.write(data.read())
-            with open(file_path.replace('.gz', ''), 'wb') as out_f, \
+            with open(file_path.replace('.gz?raw=true', ''), 'wb') as out_f, \
                     gzip.GzipFile(file_path) as zip_f:
                 out_f.write(zip_f.read())
             os.unlink(file_path)

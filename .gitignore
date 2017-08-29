@@ -53,3 +53,4 @@ WRN logs
 # Virtual environment
 venv/
 cifar/
+fashion/

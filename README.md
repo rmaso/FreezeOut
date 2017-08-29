@@ -32,7 +32,9 @@ $ source ~/Documents/Development/hackathon-castellon/venv/bin/activate      # If
 
 The preceding source command should change your prompt to the following:
 
+```
  (venv)$ 
+```
 
 Ensure pip ≥8.1 is installed:
 

@@ -13,7 +13,8 @@ import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch.autograd import Variable as V
-import torchvision.datasets as dset
+# import torchvision.datasets as dset
+from fashion import FASHION
 import torchvision.transforms as transforms
 from torch.utils.data import DataLoader
 
@@ -52,8 +53,78 @@ def calc_speedup(growthRate,nDenseBlocks,t_0,how_scale):
         return 1-float(C_f)/C
 
 
+# def get_data_loader(which_dataset,augment=True,validate=True,batch_size=50):
+#     class CIFAR10(dset.CIFAR10):
+#         def __len__(self):
+#             if self.train:
+#                 return len(self.train_data)
+#             else:
+#                 return 10000
+
+
+#     class CIFAR100(dset.CIFAR100):
+#         def __len__(self):
+#             if self.train:
+#                 return len(self.train_data)
+#             else:
+#                 return 10000
+
+#     if which_dataset is 10:
+#         print('Loading CIFAR-10...')
+#         norm_mean = [0.49139968, 0.48215827, 0.44653124]
+#         norm_std = [0.24703233, 0.24348505, 0.26158768]
+#         dataset = CIFAR10
+
+#     elif which_dataset is 100:
+#         print('Loading CIFAR-100...')
+#         norm_mean = [0.50707519, 0.48654887, 0.44091785]
+#         norm_std = [0.26733428, 0.25643846, 0.27615049]
+#         dataset = CIFAR100
+
+#     # Prepare transforms and data augmentation
+#     norm_transform = transforms.Normalize(norm_mean, norm_std)
+#     train_transform = transforms.Compose([
+#         transforms.RandomCrop(32, padding=4),
+#         transforms.RandomHorizontalFlip(),
+#         transforms.ToTensor(),
+#         norm_transform
+#     ])
+#     test_transform = transforms.Compose([
+#         transforms.ToTensor(),
+#         norm_transform
+#     ])
+#     kwargs = {'num_workers': 1, 'pin_memory': False}
+
+#     train_set = dataset(
+#         root='cifar',
+#         train=True,
+#         download=True,
+#         transform=train_transform if augment else test_transform)
+#     # If we're evaluating on the test set, load the test set
+#     if validate == 'test':
+#         test_set = dataset(root='cifar', train=False, download=True,
+#                            transform=test_transform)
+
+#     # If we're evaluating on the validation set, prepare validation set
+#     # as the last 5,000 samples in the training set.
+#     elif validate:
+#         test_set = dataset(root='cifar', train=True, download=True,
+#                            transform=test_transform)
+#         test_set.train_data = test_set.train_data[-5000:]
+#         test_set.train_labels = test_set.train_labels[-5000:]
+#         train_set.train_data = train_set.train_data[:-5000]
+#         train_set.train_labels = train_set.train_labels[:-5000]
+
+#     # Prepare data loaders
+#     train_loader = DataLoader(train_set, batch_size=batch_size,
+#                               shuffle=True, **kwargs)
+#     test_loader = DataLoader(test_set, batch_size=batch_size,
+#                              shuffle=False, **kwargs)
+#     return train_loader, test_loader
+    
+
 def get_data_loader(which_dataset,augment=True,validate=True,batch_size=50):
-    class CIFAR10(dset.CIFAR10):
+    class FASHION10(FASHION):
         def __len__(self):
             if self.train:
                 return len(self.train_data)
@@ -61,24 +132,10 @@ def get_data_loader(which_dataset,augment=True,validate=True,batch_size=50):
                 return 10000
 
 
-    class CIFAR100(dset.CIFAR100):
-        def __len__(self):
-            if self.train:
-                return len(self.train_data)
-            else:
-                return 10000
-
-    if which_dataset is 10:
-        print('Loading CIFAR-10...')
-        norm_mean = [0.49139968, 0.48215827, 0.44653124]
-        norm_std = [0.24703233, 0.24348505, 0.26158768]
-        dataset = CIFAR10
-
-    elif which_dataset is 100:
-        print('Loading CIFAR-100...')
-        norm_mean = [0.50707519, 0.48654887, 0.44091785]
-        norm_std = [0.26733428, 0.25643846, 0.27615049]
-        dataset = CIFAR100
+    print('Loading FASHION-MNIST...')
+    norm_mean = [0.50707519, 0.48654887, 0.44091785]
+    norm_std = [0.26733428, 0.25643846, 0.27615049]
+    dataset = FASHION10
 
     # Prepare transforms and data augmentation
     norm_transform = transforms.Normalize(norm_mean, norm_std)
@@ -95,19 +152,19 @@ def get_data_loader(which_dataset,augment=True,validate=True,batch_size=50):
     kwargs = {'num_workers': 1, 'pin_memory': False}
 
     train_set = dataset(
-        root='cifar',
+        root='fashion',
         train=True,
         download=True,
         transform=train_transform if augment else test_transform)
     # If we're evaluating on the test set, load the test set
     if validate == 'test':
-        test_set = dataset(root='cifar', train=False, download=True,
+        test_set = dataset(root='fashion', train=False, download=True,
                            transform=test_transform)
 
     # If we're evaluating on the validation set, prepare validation set
     # as the last 5,000 samples in the training set.
     elif validate:
-        test_set = dataset(root='cifar', train=True, download=True,
+        test_set = dataset(root='fashion', train=True, download=True,
                            transform=test_transform)
         test_set.train_data = test_set.train_data[-5000:]
         test_set.train_labels = test_set.train_labels[-5000:]
