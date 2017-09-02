@@ -58,6 +58,11 @@ Issue one of the following commands to install TensorFlow and all the packages t
  (venv)$ pip install torchvision 
 ```
 
+pip install keras
+pip install python-mnist
+pip install scikit-learn
+pip install psutil
+
 ## Running
 
 To run with default parameters, simply call
