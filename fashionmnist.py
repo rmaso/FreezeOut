@@ -8,8 +8,8 @@ import torch
 import codecs
 
 
-class FASHION(data.Dataset):
-    """`MNIST <http://yann.lecun.com/exdb/mnist/>`_ Dataset.
+class FashionMNIST(data.Dataset):
+    """Fashion MNIST Zalando Dataset.
     Args:
         root (string): Root directory of dataset where ``processed/training.pt``
             and  ``processed/test.pt`` exist.
@@ -24,13 +24,13 @@ class FASHION(data.Dataset):
             target and transforms it.
     """
     urls = [
-        'https://github.com/zalandoresearch/fashion-mnist/blob/master/data/fashion/train-images-idx3-ubyte.gz?raw=true',
-        'https://github.com/zalandoresearch/fashion-mnist/blob/master/data/fashion/train-labels-idx1-ubyte.gz?raw=true',
-        'https://github.com/zalandoresearch/fashion-mnist/blob/master/data/fashion/t10k-images-idx3-ubyte.gz?raw=true',
-        'https://github.com/zalandoresearch/fashion-mnist/blob/master/data/fashion/t10k-labels-idx1-ubyte.gz?raw=true',
+        'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-images-idx3-ubyte.gz',
+        'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/train-labels-idx1-ubyte.gz',
+        'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-images-idx3-ubyte.gz',
+        'http://fashion-mnist.s3-website.eu-central-1.amazonaws.com/t10k-labels-idx1-ubyte.gz',
     ]
     raw_folder = 'raw'
-    processed_folder = 'fashion-mnist'
+    processed_folder = 'processed'
     training_file = 'training.pt'
     test_file = 'test.pt'
 
@@ -113,7 +113,7 @@ class FASHION(data.Dataset):
             file_path = os.path.join(self.root, self.raw_folder, filename)
             with open(file_path, 'wb') as f:
                 f.write(data.read())
-            with open(file_path.replace('.gz?raw=true', ''), 'wb') as out_f, \
+            with open(file_path.replace('.gz', ''), 'wb') as out_f, \
                     gzip.GzipFile(file_path) as zip_f:
                 out_f.write(zip_f.read())
             os.unlink(file_path)
@@ -177,3 +177,15 @@ def read_image_file(path):
                     idx += 1
         assert len(images) == length
         return torch.ByteTensor(images).view(-1, 28, 28)
+
+if __name__ == '__main__':
+    trainset = FashionMNIST('data', train=True, download=True)
+    train_loader = data.DataLoader(trainset, batch_size=64,
+                            shuffle=True, num_workers=4)
+    valset = FashionMNIST('data', train=False)
+    val_loader = data.DataLoader(valset, batch_size=64,
+                            shuffle=False, num_workers=4)
+    print(len(train_loader.dataset), len(val_loader.dataset))
+
+    for i,(x,y) in enumerate(train_loader.dataset):
+        print(y)

@@ -1,14 +1,18 @@
-## Wide ResNet with FreezeOut
-# Based on code by xternalz: https://github.com/xternalz/WideResNet-pytorch
-# WRN by Sergey Zagoruyko and Nikos Komodakis
-import math
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
-import torch.optim as optim
+from torchvision import models
+import utils
+import math
+from torch.autograd import Variable
 
+import torch.optim as optim
 import numpy as np
-from utils import scale_fn
+
+scale_fn = {'linear':lambda x: x,
+                         'squared': lambda x: x**2,
+                         'cubic': lambda x: x**3}
+
 class BasicBlock(nn.Module):
     def __init__(self, in_planes, out_planes, stride, dropRate,layer_index):
         super(BasicBlock, self).__init__()
@@ -51,15 +55,12 @@ class BasicBlock(nn.Module):
         else:
             return out.detach()
     
-    
-
-
-
 # note: we call it DenseNet for simple compatibility with the training code.
 # similar we call it growthRate instead of widen_factor
-class DenseNet(nn.Module):
-    def __init__(self, growthRate, depth, nClasses, epochs, t_0, scale_lr=True, how_scale = 'cubic', const_time=False, dropRate=0.0):
-        super(DenseNet, self).__init__()
+# growthRate=4, depth=40
+class WRN(nn.Module):
+    def __init__(self, growthRate=4, depth=16, nClasses=10, epochs=100, t_0=0.8, scale_lr=True, how_scale = 'cubic', const_time=False, dropRate=0.0):
+        super(WRN, self).__init__()
         
         widen_factor=growthRate
         num_classes = nClasses
@@ -75,7 +76,7 @@ class DenseNet(nn.Module):
         # print(type(n))
         block = BasicBlock
         # 1st conv before any network block
-        self.conv1 = nn.Conv2d(3, nChannels[0], kernel_size=3, stride=1,
+        self.conv1 = nn.Conv2d(1, nChannels[0], kernel_size=3, stride=1,
                                padding=1, bias=False)
         self.conv1.layer_index = 0
         self.conv1.active = True
@@ -127,7 +128,7 @@ class DenseNet(nn.Module):
         self.lr_sched = {'itr':0}
     def _make_layer(self, nb_layers, in_planes, out_planes, block, stride, dropRate=0.0):
         layers = []
-        print(nb_layers,type(nb_layers))
+        #print(nb_layers,type(nb_layers))
         for i in range(nb_layers):
             layers.append(block(i == 0 and in_planes or out_planes, out_planes, i == 0 and stride or 1, dropRate,self.layer_index))
             self.layer_index +=1
@@ -163,6 +164,6 @@ class DenseNet(nn.Module):
         out = self.block2(out)
         out = self.block3(out)
         out = self.relu(self.bn1(out))
-        out = F.avg_pool2d(out, 8)
+        out = F.avg_pool2d(out, 7)
         out = out.view(-1, self.nChannels)
         return F.log_softmax(self.fc(out))

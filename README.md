@@ -19,7 +19,7 @@ Take the following steps to install Pytorch and TensorFlow with Virtualenv:
 Create a virtualenv environment by issuing a command of one of the following formats:
 
 ```
- $ virtualenv --system-site-packages targetDirectory # for Python 2.7
+ $ virtualenv --system-site-packages -p python3 venv
 ```
 
 where targetDirectory identifies the top of the virtualenv tree. Our instructions assume that targetDirectory is ~/Documents/Development/hackathon-castellon/venv, but you may choose any directory.
@@ -47,13 +47,14 @@ Ensure pip ≥8.1 is installed:
 Issue one of the following commands to install TensorFlow and all the packages that TensorFlow requires into the active Virtualenv environment:
 
 ```
- (venv)$ pip install --upgrade tensorflow      # for Python 2.7
+ (venv)$ pip3 install --upgrade tensorflow
+ (venv)$ pip3 install --upgrade pip install tensorboard_logger
 ```
 
 ### Installing Pytorch
 
 ```
- (venv)$ pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp27-none-macosx_10_7_x86_64.whl 
+ (venv)$ pip install http://download.pytorch.org/whl/torch-0.2.0.post3-cp36-cp36m-macosx_10_7_x86_64.whl 
  (venv)$ pip install torchvision 
 ```
 
@@ -70,7 +71,11 @@ This will by default download CIFAR-100, split it into train, valid, and test se
 ## Notes
 https://github.com/zalandoresearch/fashion-mnist      
 https://github.com/kuangliu/pytorch-cifar
-https://github.com/pytorch/vision/blob/master/torchvision/datasets/mnist.py
 
+### Models Pytorch
+[DenseNet and WRN](https://github.com/ajbrock/FreezeOut)
+[ResNet](https://github.com/kefth/fashion-mnist)
+[Dual Path Networks](https://github.com/Queequeg92/DualPathNet)
+
+### Models TensorFlow
 https://github.com/hwalsuklee/tensorflow-generative-model-collections
-

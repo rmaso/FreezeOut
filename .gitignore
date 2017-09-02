@@ -52,5 +52,6 @@ WRN logs
 
 # Virtual environment
 venv/
-cifar/
-fashion/
+data/
+saved-models/
+logs/

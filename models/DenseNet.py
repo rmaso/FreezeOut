@@ -1,24 +1,40 @@
-## DenseNet with FreezeOut. 
-## Adopted from Brandon Amos: https://github.com/bamos/densenet.pytorch
 import torch
-
 import torch.nn as nn
-import torch.optim as optim
-
 import torch.nn.functional as F
+from torchvision import models
+import utils
+import math
 from torch.autograd import Variable
 
-import torchvision.datasets as dset
-import torchvision.transforms as transforms
-from torch.utils.data import DataLoader
+def calc_speedup(growthRate,nDenseBlocks,t_0,how_scale):
+    # Height*Width at each stage
+    HW = [32**2, 16**2, 8**2]
 
-import torchvision.models as models
+    # FLOPs of first layer
+    c = [3* (2*growthRate)*HW[0]*9]
+    # num channels
+    n = 2
+    for i in range(3):
+        for j in range(nDenseBlocks):
+            # Calc flops for this layer
+            c.append(n*(4*growthRate*growthRate)*HW[i] + 4*9*growthRate*growthRate*HW[i])
+            n +=1
+        n = math.floor(n*0.5)
+    
+    # Total computational cost for training run without freezeout
+    C = 2*sum(c)
 
-import sys
-import math
-import numpy as np
+    # Computational Cost with FreezeOut
+    C_f = sum(c)+sum([c_i*scale_fn[how_scale](
+                    (t_0 + (1 - t_0) * float(index) / len(c) ))
+                    for index,c_i in enumerate(c)])
 
-from utils import scale_fn,calc_speedup
+    
+    if how_scale=='linear':
+        return 1.3*(1-float(C_f)/C)
+    else:
+        return 1-float(C_f)/C
+
 
 class Bottleneck(nn.Module):
     def __init__(self, nChannels, growthRate,layer_index):
@@ -106,9 +122,9 @@ class Transition(nn.Module):
         else:
             return out.detach()
 
-
+# growthRate=12, depth=10
 class DenseNet(nn.Module):
-    def __init__(self, growthRate, depth, nClasses, epochs, t_0, scale_lr=True, how_scale = 'cubic',const_time=False,reduction=0.5, bottleneck=True):
+    def __init__(self, growthRate=4, depth=16, nClasses=10, epochs=2, t_0=0.8, scale_lr=True, how_scale = 'cubic',const_time=False,reduction=0.5, bottleneck=True):
         super(DenseNet, self).__init__()
         
         self.epochs = epochs
@@ -132,7 +148,7 @@ class DenseNet(nn.Module):
         
         
         nChannels = 2*growthRate
-        self.conv1 = nn.Conv2d(3, nChannels, kernel_size=3, padding=1,
+        self.conv1 = nn.Conv2d(1, nChannels, kernel_size=3, padding=1,
                                bias=False)
         self.conv1.layer_index = 0
         self.conv1.active=True
@@ -239,6 +255,6 @@ class DenseNet(nn.Module):
         out = self.trans1(self.dense1(out))
         out = self.trans2(self.dense2(out))
         out = self.dense3(out)
-        out = torch.squeeze(F.avg_pool2d(F.relu(self.bn1(out)), 8))
+        out = torch.squeeze(F.avg_pool2d(F.relu(self.bn1(out)), 7))
         out = F.log_softmax(self.fc(out))
         return out
