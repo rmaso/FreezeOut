@@ -78,4 +78,8 @@ https://github.com/kuangliu/pytorch-cifar
 [Dual Path Networks](https://github.com/Queequeg92/DualPathNet)
 
 ### Models TensorFlow
+https://github.com/zalandoresearch/fashion-mnist/blob/master/benchmark/convnet.py
 https://github.com/hwalsuklee/tensorflow-generative-model-collections
+
+### Models Keras
+https://github.com/QuantumLiu/fashion-mnist-demo-by-Keras
