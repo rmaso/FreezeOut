@@ -106,3 +106,7 @@ https://github.com/hwalsuklee/tensorflow-generative-model-collections
 ### Models Keras
 https://github.com/QuantumLiu/fashion-mnist-demo-by-Keras
 https://github.com/osh/KerasGAN/blob/master/MNIST_CNN_GAN_v2.ipynb
+
+## Per a estudiar
+(https://flyyufelix.github.io/2016/10/08/fine-tuning-in-keras-part2.html)
+(https://github.com/flyyufelix/cnn_finetune)
