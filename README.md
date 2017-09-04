@@ -42,13 +42,14 @@ Ensure pip ≥8.1 is installed:
  (venv)$ easy_install -U pip
 ```
 
-### Installing TensorFlow
+### Installing TensorFlow + Keras
 
 Issue one of the following commands to install TensorFlow and all the packages that TensorFlow requires into the active Virtualenv environment:
 
 ```
  (venv)$ pip3 install --upgrade tensorflow
  (venv)$ pip3 install --upgrade pip install tensorboard_logger
+ (venv)$ pip install keras
 ```
 
 ### Installing Pytorch
@@ -58,20 +59,36 @@ Issue one of the following commands to install TensorFlow and all the packages t
  (venv)$ pip install torchvision 
 ```
 
-pip install keras
-pip install python-mnist
-pip install scikit-learn
-pip install psutil
+### Installing auxiliar libraries
+```
+ (venv)$ pip install python-mnist
+ (venv)$ pip install scikit-learn
+ (venv)$ pip install psutil
+```
+
+## Organització d'algoritmes
+
+En aquest repositori tenim models de classificació d'imatges de tres llibreries: Pytorch, TensorFlow i Keras. En cada lliberia tenim els següents algorismes:
+
+* Pytorch
+1. SimpleNet
+2. [WRN - Wide Residual Networks](https://arxiv.org/pdf/1605.07146)
+3. [ResNet - Residual Networks](https://deepmlblog.wordpress.com/2016/01/05/residual-networks-in-torch-mnist/), [Github](https://github.com/KaimingHe/deep-residual-networks)
+4. [DenseNet - Densely Connected Convolutional Networks](https://github.com/liuzhuang13/DenseNet)
+
+* Keras
+1. [VGG - Very Deep Convolutional Network](https://arxiv.org/abs/1409.1556)
+
+* Tensor Flow
+1. [Comparativa entre ResNets, HighwayNets i DenseNets](https://chatbotslife.com/resnets-highwaynets-and-densenets-oh-my-9bb15918ee32)
 
 ## Running
 
-To run with default parameters, simply call
+Per a executar els algoritmes, entra en les carpetes corresponents i executar:
 
 ```python
 python train.py
 ```
-
-This will by default download CIFAR-100, split it into train, valid, and test sets, then train a k=12 L=76 DenseNet-BC using SGD with Nesterov Momentum.
 
 ## Notes
 https://github.com/zalandoresearch/fashion-mnist      
@@ -88,3 +105,4 @@ https://github.com/hwalsuklee/tensorflow-generative-model-collections
 
 ### Models Keras
 https://github.com/QuantumLiu/fashion-mnist-demo-by-Keras
+https://github.com/osh/KerasGAN/blob/master/MNIST_CNN_GAN_v2.ipynb
