@@ -64,6 +64,7 @@ Issue one of the following commands to install TensorFlow and all the packages t
  (venv)$ pip install python-mnist
  (venv)$ pip install scikit-learn
  (venv)$ pip install psutil
+ (venv)$ pip install opencv-python
 ```
 
 ## Organització d'algoritmes
