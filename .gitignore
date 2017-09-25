@@ -55,3 +55,6 @@ venv/
 data/
 saved-models/
 logs/
+
+finetune/cats_and_dogs/
+

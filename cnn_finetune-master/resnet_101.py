@@ -190,6 +190,12 @@ if __name__ == '__main__':
     # Load our model
     model = resnet101_model(img_rows, img_cols, channel, num_classes)
 
+
+    for layer in model.layers[ :-3]:
+        layer.trainable = False
+
+    model.summary()
+
     # Start Fine-tuning
     model.fit(X_train, Y_train,
               batch_size=batch_size,

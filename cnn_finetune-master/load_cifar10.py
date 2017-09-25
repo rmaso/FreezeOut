@@ -6,8 +6,8 @@ from keras.datasets import cifar10
 from keras import backend as K
 from keras.utils import np_utils
 
-nb_train_samples = 3000 # 3000 training samples
-nb_valid_samples = 100 # 100 validation samples
+nb_train_samples = 5000 # 3000 training samples
+nb_valid_samples = 1000 # 100 validation samples
 num_classes = 10
 
 def load_cifar10_data(img_rows, img_cols):
