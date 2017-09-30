@@ -1,0 +1,26 @@
+<annotation>
+	<folder>eur002</folder>
+	<filename>9k=(1).jpg</filename>
+	<path>/home/ramon/Downloads/hackathon/eur002/9k=(1).jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>225</width>
+		<height>225</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>eur002</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>10</xmin>
+			<ymin>10</ymin>
+			<xmax>216</xmax>
+			<ymax>217</ymax>
+		</bndbox>
+	</object>
+</annotation>
