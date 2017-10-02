@@ -58,3 +58,4 @@ logs/
 
 finetune/cats_and_dogs/
 castello*/*.h5
+*.tar.gz

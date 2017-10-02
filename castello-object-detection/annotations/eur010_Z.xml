@@ -1,0 +1,26 @@
+<annotation>
+	<folder>eur010</folder>
+	<filename>eur010_Z.jpg</filename>
+	<path>/home/ramon/Downloads/hackathon/eur010/Z.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>303</width>
+		<height>166</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>10</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>47</xmin>
+			<ymin>33</ymin>
+			<xmax>259</xmax>
+			<ymax>139</ymax>
+		</bndbox>
+	</object>
+</annotation>

@@ -1,0 +1,38 @@
+<annotation>
+	<folder>ctmos050</folder>
+	<filename>ctmos050_Copia de 20170930_140539.jpg</filename>
+	<path>/home/ramon/Downloads/hackathon/ctmos050/Copia de 20170930_140539.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>4128</width>
+		<height>2322</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>0.50</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>1066</xmin>
+			<ymin>637</ymin>
+			<xmax>1837</xmax>
+			<ymax>1331</ymax>
+		</bndbox>
+	</object>
+	<object>
+		<name>0.05</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>2602</xmin>
+			<ymin>1231</ymin>
+			<xmax>3319</xmax>
+			<ymax>1869</ymax>
+		</bndbox>
+	</object>
+</annotation>

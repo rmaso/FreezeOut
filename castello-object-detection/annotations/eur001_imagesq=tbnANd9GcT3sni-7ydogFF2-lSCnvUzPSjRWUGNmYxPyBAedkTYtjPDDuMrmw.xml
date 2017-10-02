@@ -1,0 +1,26 @@
+<annotation>
+	<folder>eur001</folder>
+	<filename>eur001_imagesq=tbnANd9GcT3sni-7ydogFF2-lSCnvUzPSjRWUGNmYxPyBAedkTYtjPDDuMrmw.jpg</filename>
+	<path>/home/ramon/Downloads/hackathon/eur001/imagesq=tbnANd9GcT3sni-7ydogFF2-lSCnvUzPSjRWUGNmYxPyBAedkTYtjPDDuMrmw.jpg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>225</width>
+		<height>225</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>1</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>7</xmin>
+			<ymin>6</ymin>
+			<xmax>215</xmax>
+			<ymax>217</ymax>
+		</bndbox>
+	</object>
+</annotation>

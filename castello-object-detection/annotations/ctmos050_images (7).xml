@@ -1,0 +1,26 @@
+<annotation>
+	<folder>ctmos050</folder>
+	<filename>ctmos050_images (7).jpeg</filename>
+	<path>/home/ramon/Downloads/hackathon/ctmos050/images (7).jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>223</width>
+		<height>226</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>0.50</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>5</xmin>
+			<ymin>5</ymin>
+			<xmax>221</xmax>
+			<ymax>224</ymax>
+		</bndbox>
+	</object>
+</annotation>

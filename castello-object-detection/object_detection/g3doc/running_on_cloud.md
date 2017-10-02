@@ -11,7 +11,7 @@ See [the Cloud ML quick start guide](https://cloud.google.com/ml-engine/docs/qui
 in the [installation instructions](installation.md).
 3. The reader has a valid data set and stored it in a Google Cloud Storage
 bucket. See [this page](preparing_inputs.md) for instructions on how to generate
-a dataset for the PASCAL VOC challenge or the Oxford-IIT Pet dataset.
+a dataset for the PASCAL VOC challenge or the Oxford-IIIT Pet dataset.
 4. The reader has configured a valid Object Detection pipeline, and stored it
 in a Google Cloud Storage bucket. See [this page](configuring_jobs.md) for
 details on how to write a pipeline configuration.
@@ -27,7 +27,7 @@ packaged (along with it's TF-Slim dependency). The required packages can be
 created with the following command
 
 ``` bash
-# From tensorflow/models/
+# From tensorflow/models/research/
 python setup.py sdist
 (cd slim && python setup.py sdist)
 ```
@@ -69,7 +69,7 @@ been written, a user can start a training job on Cloud ML Engine using the
 following command:
 
 ``` bash
-# From tensorflow/models/
+# From tensorflow/models/research/
 gcloud ml-engine jobs submit training object_detection_`date +%s` \
     --job-dir=gs://${TRAIN_DIR} \
     --packages dist/object_detection-0.1.tar.gz,slim/dist/slim-0.1.tar.gz \
@@ -88,7 +88,7 @@ training checkpoints and events will be written to and
 Google Cloud Storage.
 
 Users can monitor the progress of their training job on the [ML Engine
-Dasboard](https://pantheon.corp.google.com/mlengine/jobs).
+Dashboard](https://console.cloud.google.com/mlengine/jobs).
 
 ## Running an Evaluation Job on Cloud
 

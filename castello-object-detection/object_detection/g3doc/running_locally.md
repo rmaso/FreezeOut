@@ -10,7 +10,7 @@ dependencies, compiling the configuration protobufs and setting up the Python
 environment.
 2. A valid data set has been created. See [this page](preparing_inputs.md) for
 instructions on how to generate a dataset for the PASCAL VOC challenge or the
-Oxford-IIT Pet dataset.
+Oxford-IIIT Pet dataset.
 3. A Object Detection pipeline configuration has been written. See
 [this page](configuring_jobs.md) for details on how to write a pipeline configuration.
 
@@ -33,7 +33,7 @@ Oxford-IIT Pet dataset.
 A local training job can be run with the following command:
 
 ```bash
-# From the tensorflow/models/ directory
+# From the tensorflow/models/research/ directory
 python object_detection/train.py \
     --logtostderr \
     --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
@@ -52,7 +52,7 @@ train directory for new checkpoints and evaluate them on a test dataset. The
 job can be run using the following command:
 
 ```bash
-# From the tensorflow/models/ directory
+# From the tensorflow/models/research/ directory
 python object_detection/eval.py \
     --logtostderr \
     --pipeline_config_path=${PATH_TO_YOUR_PIPELINE_CONFIG} \
@@ -77,5 +77,5 @@ tensorboard --logdir=${PATH_TO_MODEL_DIRECTORY}
 ```
 
 where `${PATH_TO_MODEL_DIRECTORY}` points to the directory that contains the
-train and eval directories. Please note it make take Tensorboard a couple
-minutes to populate with data.
+train and eval directories. Please note it may take Tensorboard a couple minutes
+to populate with data.

@@ -1,0 +1,26 @@
+<annotation>
+	<folder>ctmos005</folder>
+	<filename>ctmos005_descarga (10) copia.jpeg</filename>
+	<path>/home/ramon/Downloads/hackathon/ctmos005/descarga (10) copia.jpeg</path>
+	<source>
+		<database>Unknown</database>
+	</source>
+	<size>
+		<width>80</width>
+		<height>100</height>
+		<depth>3</depth>
+	</size>
+	<segmented>0</segmented>
+	<object>
+		<name>0.05</name>
+		<pose>Unspecified</pose>
+		<truncated>0</truncated>
+		<difficult>0</difficult>
+		<bndbox>
+			<xmin>8</xmin>
+			<ymin>66</ymin>
+			<xmax>33</xmax>
+			<ymax>88</ymax>
+		</bndbox>
+	</object>
+</annotation>
